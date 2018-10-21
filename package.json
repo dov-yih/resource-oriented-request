@@ -1,0 +1,38 @@
+{
+  "name": "wx-kitsu-jsonapi",
+  "version": "0.1.0",
+  "description": "weixin jsoonapi by kitsu",
+  "main": "lib/index.js",
+  "jsnext:main": "lib/index.es.js",
+  "scripts": {
+    "test": "test",
+    "build": "rollup -c --environment INCLUDE_DEPS,BUILD:production",
+    "build:es": "./node_modules/.bin/babel ./src --out-file ./lib/index.es.js"
+  },
+  "keywords": [
+    "jsonapi",
+    "wx",
+    "kitsu"
+  ],
+  "author": "dov yih",
+  "license": "BSD-2-Clause",
+  "dependencies": {
+    "flyio": "^0.6.2",
+    "kitsu-core": "^6.4.0",
+    "pluralize": "^7.0.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.1.2",
+    "@babel/core": "^7.1.2",
+    "@babel/plugin-proposal-class-properties": "^7.1.0",
+    "@babel/plugin-proposal-decorators": "^7.1.2",
+    "@babel/preset-env": "^7.1.0",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-plugin-transform-decorators-legacy": "^1.3.5",
+    "rollup-plugin-babel": "^4.0.3",
+    "rollup-plugin-commonjs": "^9.2.0",
+    "rollup-plugin-filesize": "^5.0.1",
+    "rollup-plugin-node-resolve": "^3.4.0",
+    "rollup-plugin-uglify": "^6.0.0"
+  }
+}
