@@ -1,6 +1,5 @@
 // 当前环境是否为开发环境
-const devTools = process.env.NODE_ENV === 'development'
-
+var devTools = process.env.NODE_ENV === 'development';
 export default {
   // 主机域名
   baseURL: devTools ? 'https://ktt.openxyz.com' : '',
@@ -8,4 +7,4 @@ export default {
   appKey: '',
   // 小程序 Id
   appId: ''
-}
+};

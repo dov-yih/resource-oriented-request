@@ -9,11 +9,17 @@ import {
   serialise,
   snake
 } from 'kitsu-core'
+// const regeneratorRuntime = require('./runtime.js')
 
 function getModelName (target, name, descriptor) {
   target.model = target.getModelName()
 }
 
+
+/**
+ * 
+ * @see https://developers.weixin.qq.com/community/develop/doc/a39569a8bd172ab387dc2f8c4a80ee8f
+ *  */ 
 @getModelName
 export default class API {
   static getModelName () {
@@ -25,7 +31,9 @@ export default class API {
   // @TODO 命名风格确定
   static camel = snake
   static resCase = snake
-
+  static async testAsync() {
+    return 'test'
+  }
   /**
    * @example Basic Usage
    * API.get({
@@ -179,3 +187,4 @@ export default class API {
     console.log(Date.now(), 'on error:', e)
   }
 }
+

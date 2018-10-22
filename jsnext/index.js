@@ -1,67 +1,5 @@
-// 导入配置
-import config from './config';
-import { query } from 'kitsu-core'; // 引入 fly
+import _regeneratorRuntime from "@babel/runtime/regenerator";
 
-import Fly from 'flyio/dist/npm/wx';
-var fly = new Fly(); // 超时配置
-
-fly.config.timeout = 5 * 1000; // 公共 Headers
-
-fly.config.headers['X-Tag'] = 'flyio';
-fly.config.headers['Content-Type'] = 'application/vnd.api+json'; // 服务器地址
-
-fly.config.baseURL = config.baseURL; // 添加请求拦截器
-
-fly.interceptors.request.use(function (request) {
-  // 自定义请求头
-  request.headers['X-Tag'] = 'flyio'; // 如果是 GET 将 request.body 转换，模拟 axios 的paramsSerializer
-
-  if (request.method === 'GET') {
-    request.body = query(request.body);
-  }
-
-  var accessToken = wx.getStorageSync('access_token'); // 如果包含了 token，直接返回
-
-  if (accessToken === undefined || request.headers['Authorization']) {
-    return request;
-  } // 如果没有 token，在 headers 里添加
-
-
-  request.headers['Authorization'] = "Bearer ".concat(accessToken); // 打印请求体
-
-  console.log('fly请求体 -->>>%o', request.body);
-  return request;
-}); // 添加响应拦截器
-
-fly.interceptors.response.use(function (response) {
-  // 打印返回体
-  console.log('fly返回体 -->>>%o', response.data); // @TODO 这里返回 data ??
-
-  return response;
-},
-/**
- * @see https://jsonapi.org/format/#errors
- */
-function (E) {
-  if (E.response) {
-    var e = E.response.data;
-    if (e && e.errors) E.errors = e.errors;
-  }
-
-  return E; // 发生网络错误
-});
-export default fly;
-// 当前环境是否为开发环境
-var devTools = process.env.NODE_ENV === 'development'; // http://127.0.0.1:3000
-
-export default {
-  // 主机域名
-  baseURL: devTools ? 'https://ktt.openxyz.com' : '',
-  // 小程序 Key
-  appKey: '',
-  // 小程序 Id
-  appId: ''
-};
 var _class, _class2, _temp;
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
@@ -88,11 +26,16 @@ import pluralise from 'pluralize';
 import { // camel,
 deserialise, // error,
 // kebab,
-serialise, snake } from 'kitsu-core';
+serialise, snake } from 'kitsu-core'; // const regeneratorRuntime = require('./runtime.js')
 
 function getModelName(target, name, descriptor) {
   target.model = target.getModelName();
 }
+/**
+ * 
+ * @see https://developers.weixin.qq.com/community/develop/doc/a39569a8bd172ab387dc2f8c4a80ee8f
+ *  */
+
 
 var API = getModelName(_class = (_temp = _class2 =
 /*#__PURE__*/
@@ -107,8 +50,29 @@ function () {
       return this.prototype.constructor.name;
     }
   }, {
-    key: "get",
+    key: "testAsync",
+    value: function () {
+      var _testAsync = _asyncToGenerator(
+      /*#__PURE__*/
+      _regeneratorRuntime.mark(function _callee() {
+        return _regeneratorRuntime.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                return _context.abrupt("return", 'test');
 
+              case 1:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      return function testAsync() {
+        return _testAsync.apply(this, arguments);
+      };
+    }()
     /**
      * @example Basic Usage
      * API.get({
@@ -125,10 +89,13 @@ function () {
      * @param {*} params
      * @param {*} headers
      */
+
+  }, {
+    key: "get",
     value: function () {
       var _get = _asyncToGenerator(
       /*#__PURE__*/
-      regeneratorRuntime.mark(function _callee() {
+      _regeneratorRuntime.mark(function _callee2() {
         var body,
             headers,
             id,
@@ -137,20 +104,20 @@ function () {
             url,
             _ref,
             data,
-            _args = arguments;
+            _args2 = arguments;
 
-        return regeneratorRuntime.wrap(function _callee$(_context) {
+        return _regeneratorRuntime.wrap(function _callee2$(_context2) {
           while (1) {
-            switch (_context.prev = _context.next) {
+            switch (_context2.prev = _context2.next) {
               case 0:
-                body = _args.length > 0 && _args[0] !== undefined ? _args[0] : {};
-                headers = _args.length > 1 && _args[1] !== undefined ? _args[1] : {};
-                _context.prev = 2;
+                body = _args2.length > 0 && _args2[0] !== undefined ? _args2[0] : {};
+                headers = _args2.length > 1 && _args2[1] !== undefined ? _args2[1] : {};
+                _context2.prev = 2;
                 id = body.id, relationship = body.relationship, params = _objectWithoutProperties(body, ["id", "relationship"]);
                 url = this.plural(this.resCase(this.getModelName()));
                 if (id) url += "/".concat(id);
                 if (relationship) url += "/".concat(this.resCase(relationship));
-                _context.next = 9;
+                _context2.next = 9;
                 return this.axios.get(url, {
                   params: params,
                   // @FIXME flyio 不支持 paramsSerializer
@@ -159,21 +126,21 @@ function () {
                 });
 
               case 9:
-                _ref = _context.sent;
+                _ref = _context2.sent;
                 data = _ref.data;
-                return _context.abrupt("return", deserialise(data));
+                return _context2.abrupt("return", deserialise(data));
 
               case 14:
-                _context.prev = 14;
-                _context.t0 = _context["catch"](2);
-                this.onError(_context.t0);
+                _context2.prev = 14;
+                _context2.t0 = _context2["catch"](2);
+                this.onError(_context2.t0);
 
               case 17:
               case "end":
-                return _context.stop();
+                return _context2.stop();
             }
           }
-        }, _callee, this, [[2, 14]]);
+        }, _callee2, this, [[2, 14]]);
       }));
 
       return function get() {
@@ -185,49 +152,49 @@ function () {
     value: function () {
       var _patch = _asyncToGenerator(
       /*#__PURE__*/
-      regeneratorRuntime.mark(function _callee2(body) {
+      _regeneratorRuntime.mark(function _callee3(body) {
         var headers,
             model,
             serialData,
             url,
             _ref2,
             data,
-            _args2 = arguments;
+            _args3 = arguments;
 
-        return regeneratorRuntime.wrap(function _callee2$(_context2) {
+        return _regeneratorRuntime.wrap(function _callee3$(_context3) {
           while (1) {
-            switch (_context2.prev = _context2.next) {
+            switch (_context3.prev = _context3.next) {
               case 0:
-                headers = _args2.length > 1 && _args2[1] !== undefined ? _args2[1] : {};
-                _context2.prev = 1;
+                headers = _args3.length > 1 && _args3[1] !== undefined ? _args3[1] : {};
+                _context3.prev = 1;
                 model = this.getModelName();
-                _context2.next = 5;
+                _context3.next = 5;
                 return serialise.apply(this, [model, body, 'PUT']);
 
               case 5:
-                serialData = _context2.sent;
+                serialData = _context3.sent;
                 url = this.plural(this.resCase(model)) + '/' + body.id;
-                _context2.next = 9;
+                _context3.next = 9;
                 return this.axios.put(url, serialData, {
                   headers: Object.assign(this.headers, headers)
                 });
 
               case 9:
-                _ref2 = _context2.sent;
+                _ref2 = _context3.sent;
                 data = _ref2.data;
-                return _context2.abrupt("return", data);
+                return _context3.abrupt("return", data);
 
               case 14:
-                _context2.prev = 14;
-                _context2.t0 = _context2["catch"](1);
-                this.onError(_context2.t0);
+                _context3.prev = 14;
+                _context3.t0 = _context3["catch"](1);
+                this.onError(_context3.t0);
 
               case 17:
               case "end":
-                return _context2.stop();
+                return _context3.stop();
             }
           }
-        }, _callee2, this, [[1, 14]]);
+        }, _callee3, this, [[1, 14]]);
       }));
 
       return function patch(_x) {
@@ -239,55 +206,55 @@ function () {
     value: function () {
       var _delete2 = _asyncToGenerator(
       /*#__PURE__*/
-      regeneratorRuntime.mark(function _callee3(id) {
+      _regeneratorRuntime.mark(function _callee4(id) {
         var headers,
             model,
             url,
             _ref3,
             data,
-            _args3 = arguments;
+            _args4 = arguments;
 
-        return regeneratorRuntime.wrap(function _callee3$(_context3) {
+        return _regeneratorRuntime.wrap(function _callee4$(_context4) {
           while (1) {
-            switch (_context3.prev = _context3.next) {
+            switch (_context4.prev = _context4.next) {
               case 0:
-                headers = _args3.length > 1 && _args3[1] !== undefined ? _args3[1] : {};
-                _context3.prev = 1;
+                headers = _args4.length > 1 && _args4[1] !== undefined ? _args4[1] : {};
+                _context4.prev = 1;
                 model = this.getModelName();
                 url = this.plural(this.resCase(model)) + '/' + id;
-                _context3.t0 = this.axios;
-                _context3.t1 = url;
-                _context3.next = 8;
+                _context4.t0 = this.axios;
+                _context4.t1 = url;
+                _context4.next = 8;
                 return serialise.apply(this, [model, {
                   id: id
                 }, 'DELETE']);
 
               case 8:
-                _context3.t2 = _context3.sent;
-                _context3.t3 = Object.assign(this.headers, headers);
-                _context3.t4 = {
-                  data: _context3.t2,
-                  headers: _context3.t3
+                _context4.t2 = _context4.sent;
+                _context4.t3 = Object.assign(this.headers, headers);
+                _context4.t4 = {
+                  data: _context4.t2,
+                  headers: _context4.t3
                 };
-                _context3.next = 13;
-                return _context3.t0.delete.call(_context3.t0, _context3.t1, _context3.t4);
+                _context4.next = 13;
+                return _context4.t0.delete.call(_context4.t0, _context4.t1, _context4.t4);
 
               case 13:
-                _ref3 = _context3.sent;
+                _ref3 = _context4.sent;
                 data = _ref3.data;
-                return _context3.abrupt("return", data);
+                return _context4.abrupt("return", data);
 
               case 18:
-                _context3.prev = 18;
-                _context3.t5 = _context3["catch"](1);
-                this.onError(_context3.t5);
+                _context4.prev = 18;
+                _context4.t5 = _context4["catch"](1);
+                this.onError(_context4.t5);
 
               case 21:
               case "end":
-                return _context3.stop();
+                return _context4.stop();
             }
           }
-        }, _callee3, this, [[1, 18]]);
+        }, _callee4, this, [[1, 18]]);
       }));
 
       return function _delete(_x2) {
@@ -299,19 +266,19 @@ function () {
     value: function () {
       var _self = _asyncToGenerator(
       /*#__PURE__*/
-      regeneratorRuntime.mark(function _callee4() {
+      _regeneratorRuntime.mark(function _callee5() {
         var params,
             headers,
             res,
-            _args4 = arguments;
-        return regeneratorRuntime.wrap(function _callee4$(_context4) {
+            _args5 = arguments;
+        return _regeneratorRuntime.wrap(function _callee5$(_context5) {
           while (1) {
-            switch (_context4.prev = _context4.next) {
+            switch (_context5.prev = _context5.next) {
               case 0:
-                params = _args4.length > 0 && _args4[0] !== undefined ? _args4[0] : {};
-                headers = _args4.length > 1 && _args4[1] !== undefined ? _args4[1] : {};
-                _context4.prev = 2;
-                _context4.next = 5;
+                params = _args5.length > 0 && _args5[0] !== undefined ? _args5[0] : {};
+                headers = _args5.length > 1 && _args5[1] !== undefined ? _args5[1] : {};
+                _context5.prev = 2;
+                _context5.next = 5;
                 return this.get('users', // users ??
                 Object.assign({
                   filter: {
@@ -320,20 +287,20 @@ function () {
                 }, params), headers);
 
               case 5:
-                res = _context4.sent;
-                return _context4.abrupt("return", res.data[0]);
+                res = _context5.sent;
+                return _context5.abrupt("return", res.data[0]);
 
               case 9:
-                _context4.prev = 9;
-                _context4.t0 = _context4["catch"](2);
-                this.onError(_context4.t0);
+                _context5.prev = 9;
+                _context5.t0 = _context5["catch"](2);
+                this.onError(_context5.t0);
 
               case 12:
               case "end":
-                return _context4.stop();
+                return _context5.stop();
             }
           }
-        }, _callee4, this, [[2, 9]]);
+        }, _callee5, this, [[2, 9]]);
       }));
 
       return function self() {
@@ -345,51 +312,51 @@ function () {
     value: function () {
       var _post = _asyncToGenerator(
       /*#__PURE__*/
-      regeneratorRuntime.mark(function _callee5(body) {
+      _regeneratorRuntime.mark(function _callee6(body) {
         var headers,
             model,
             url,
             _ref4,
             data,
-            _args5 = arguments;
+            _args6 = arguments;
 
-        return regeneratorRuntime.wrap(function _callee5$(_context5) {
+        return _regeneratorRuntime.wrap(function _callee6$(_context6) {
           while (1) {
-            switch (_context5.prev = _context5.next) {
+            switch (_context6.prev = _context6.next) {
               case 0:
-                headers = _args5.length > 1 && _args5[1] !== undefined ? _args5[1] : {};
-                _context5.prev = 1;
+                headers = _args6.length > 1 && _args6[1] !== undefined ? _args6[1] : {};
+                _context6.prev = 1;
                 model = this.getModelName();
                 url = this.plural(this.resCase(model));
-                _context5.t0 = this.axios;
-                _context5.t1 = url;
-                _context5.next = 8;
+                _context6.t0 = this.axios;
+                _context6.t1 = url;
+                _context6.next = 8;
                 return serialise.apply(this, [model, body]);
 
               case 8:
-                _context5.t2 = _context5.sent;
-                _context5.t3 = {
+                _context6.t2 = _context6.sent;
+                _context6.t3 = {
                   headers: Object.assign(this.headers, headers)
                 };
-                _context5.next = 12;
-                return _context5.t0.post.call(_context5.t0, _context5.t1, _context5.t2, _context5.t3);
+                _context6.next = 12;
+                return _context6.t0.post.call(_context6.t0, _context6.t1, _context6.t2, _context6.t3);
 
               case 12:
-                _ref4 = _context5.sent;
+                _ref4 = _context6.sent;
                 data = _ref4.data;
-                return _context5.abrupt("return", data);
+                return _context6.abrupt("return", data);
 
               case 17:
-                _context5.prev = 17;
-                _context5.t4 = _context5["catch"](1);
-                this.onError(_context5.t4);
+                _context6.prev = 17;
+                _context6.t4 = _context6["catch"](1);
+                this.onError(_context6.t4);
 
               case 20:
               case "end":
-                return _context5.stop();
+                return _context6.stop();
             }
           }
-        }, _callee5, this, [[1, 17]]);
+        }, _callee6, this, [[1, 17]]);
       }));
 
       return function post(_x3) {
@@ -412,24 +379,24 @@ function () {
     value: function () {
       var _all = _asyncToGenerator(
       /*#__PURE__*/
-      regeneratorRuntime.mark(function _callee6() {
+      _regeneratorRuntime.mark(function _callee7() {
         var params,
             headers,
-            _args6 = arguments;
-        return regeneratorRuntime.wrap(function _callee6$(_context6) {
+            _args7 = arguments;
+        return _regeneratorRuntime.wrap(function _callee7$(_context7) {
           while (1) {
-            switch (_context6.prev = _context6.next) {
+            switch (_context7.prev = _context7.next) {
               case 0:
-                params = _args6.length > 0 && _args6[0] !== undefined ? _args6[0] : {};
-                headers = _args6.length > 1 && _args6[1] !== undefined ? _args6[1] : {};
-                return _context6.abrupt("return", this.get(params, headers));
+                params = _args7.length > 0 && _args7[0] !== undefined ? _args7[0] : {};
+                headers = _args7.length > 1 && _args7[1] !== undefined ? _args7[1] : {};
+                return _context7.abrupt("return", this.get(params, headers));
 
               case 3:
               case "end":
-                return _context6.stop();
+                return _context7.stop();
             }
           }
-        }, _callee6, this);
+        }, _callee7, this);
       }));
 
       return function all() {
@@ -441,26 +408,26 @@ function () {
     value: function () {
       var _getById = _asyncToGenerator(
       /*#__PURE__*/
-      regeneratorRuntime.mark(function _callee7(id) {
+      _regeneratorRuntime.mark(function _callee8(id) {
         var params,
             headers,
-            _args7 = arguments;
-        return regeneratorRuntime.wrap(function _callee7$(_context7) {
+            _args8 = arguments;
+        return _regeneratorRuntime.wrap(function _callee8$(_context8) {
           while (1) {
-            switch (_context7.prev = _context7.next) {
+            switch (_context8.prev = _context8.next) {
               case 0:
-                params = _args7.length > 1 && _args7[1] !== undefined ? _args7[1] : {};
-                headers = _args7.length > 2 && _args7[2] !== undefined ? _args7[2] : {};
-                return _context7.abrupt("return", this.get(_objectSpread({
+                params = _args8.length > 1 && _args8[1] !== undefined ? _args8[1] : {};
+                headers = _args8.length > 2 && _args8[2] !== undefined ? _args8[2] : {};
+                return _context8.abrupt("return", this.get(_objectSpread({
                   id: id
                 }, params), headers));
 
               case 3:
               case "end":
-                return _context7.stop();
+                return _context8.stop();
             }
           }
-        }, _callee7, this);
+        }, _callee8, this);
       }));
 
       return function getById(_x4) {
@@ -472,24 +439,24 @@ function () {
     value: function () {
       var _update = _asyncToGenerator(
       /*#__PURE__*/
-      regeneratorRuntime.mark(function _callee8() {
+      _regeneratorRuntime.mark(function _callee9() {
         var params,
             headers,
-            _args8 = arguments;
-        return regeneratorRuntime.wrap(function _callee8$(_context8) {
+            _args9 = arguments;
+        return _regeneratorRuntime.wrap(function _callee9$(_context9) {
           while (1) {
-            switch (_context8.prev = _context8.next) {
+            switch (_context9.prev = _context9.next) {
               case 0:
-                params = _args8.length > 0 && _args8[0] !== undefined ? _args8[0] : {};
-                headers = _args8.length > 1 && _args8[1] !== undefined ? _args8[1] : {};
-                return _context8.abrupt("return", this.patch(params, headers));
+                params = _args9.length > 0 && _args9[0] !== undefined ? _args9[0] : {};
+                headers = _args9.length > 1 && _args9[1] !== undefined ? _args9[1] : {};
+                return _context9.abrupt("return", this.patch(params, headers));
 
               case 3:
               case "end":
-                return _context8.stop();
+                return _context9.stop();
             }
           }
-        }, _callee8, this);
+        }, _callee9, this);
       }));
 
       return function update() {
@@ -501,24 +468,24 @@ function () {
     value: function () {
       var _create = _asyncToGenerator(
       /*#__PURE__*/
-      regeneratorRuntime.mark(function _callee9() {
+      _regeneratorRuntime.mark(function _callee10() {
         var params,
             headers,
-            _args9 = arguments;
-        return regeneratorRuntime.wrap(function _callee9$(_context9) {
+            _args10 = arguments;
+        return _regeneratorRuntime.wrap(function _callee10$(_context10) {
           while (1) {
-            switch (_context9.prev = _context9.next) {
+            switch (_context10.prev = _context10.next) {
               case 0:
-                params = _args9.length > 0 && _args9[0] !== undefined ? _args9[0] : {};
-                headers = _args9.length > 1 && _args9[1] !== undefined ? _args9[1] : {};
-                return _context9.abrupt("return", this.post(params, headers));
+                params = _args10.length > 0 && _args10[0] !== undefined ? _args10[0] : {};
+                headers = _args10.length > 1 && _args10[1] !== undefined ? _args10[1] : {};
+                return _context10.abrupt("return", this.post(params, headers));
 
               case 3:
               case "end":
-                return _context9.stop();
+                return _context10.stop();
             }
           }
-        }, _callee9, this);
+        }, _callee10, this);
       }));
 
       return function create() {
