@@ -30,12 +30,14 @@
     "@babel/preset-env": "^7.1.0",
     "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-plugin-transform-decorators-legacy": "^1.3.5",
+    "cz-conventional-changelog": "^2.1.0",
     "rollup-plugin-babel": "^4.0.3",
     "rollup-plugin-commonjs": "^9.2.0",
     "rollup-plugin-filesize": "^5.0.1",
     "rollup-plugin-json": "^3.1.0",
     "rollup-plugin-node-resolve": "^3.4.0",
-    "rollup-plugin-uglify": "^6.0.0"
+    "rollup-plugin-terser": "^3.0.0",
+    "validate-commit-msg": "^2.14.0"
   },
   "directories": {
     "lib": "lib"
@@ -47,5 +49,17 @@
   "bugs": {
     "url": "https://github.com/dov-yih/wx-kitsu/issues"
   },
-  "homepage": "https://github.com/dov-yih/wx-kitsu#readme"
+  "homepage": "https://github.com/dov-yih/wx-kitsu#readme",
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    },
+    "validate-commit-msg": {
+      "types": "*",
+      "scope": {
+        "required": true
+      },
+      "autoFix": true
+    }
+  }
 }
