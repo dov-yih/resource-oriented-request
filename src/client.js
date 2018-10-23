@@ -48,7 +48,7 @@ fly.interceptors
     // @TODO 这里返回 data ??
     return response
   },
-  /**
+  /*
    * @see https://jsonapi.org/format/#errors
    */
   E => {
