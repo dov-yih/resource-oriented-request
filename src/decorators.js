@@ -1,17 +1,17 @@
 /**
  * 获取 model name, 默认是当前的类的类名
- * @example <caption>默认</caption>
- *  class User extends API {
- *    //...
- *  }
- *  // this.model => User
  * @param {string} modeName
  * @todo add unit test
+ * @example <caption>默认</caption>
+ * class User extends API {
+ *   //...
+ * }
+ *  // this.model => User
  * @example <caption>自定义 model name</caption>
- *  @modelName('player')
- *  class User extends API {
- *    // ...
- *  }
+ * \@modelName('player')
+ * class User extends API {
+ *   // ...
+ * }
  */
 export function modelName(modeName) {
   return function (target, name, descriptor) {
@@ -22,7 +22,14 @@ export function modelName(modeName) {
  * 设置 baseURL
  * @param {string} url
  * @todo pedding realization
- * @access private
+ * @example <caption>基本用法</caption>
+ * \@baseURL('localhost:3000')
+ * class Base extends API {}
+ * class User extends Base {
+ *  // ...
+ * }
+ * User.getById(1)
+ * // localhost:3000/user/1
  */
 export function baseURL(url) {
   return function (target, name, descriptor) {

@@ -38,12 +38,15 @@
 -   [modelName](#modelname)
     -   [Parameters](#parameters-13)
     -   [Examples](#examples-2)
--   [engine](#engine)
+-   [baseURL](#baseurl)
     -   [Parameters](#parameters-14)
+    -   [Examples](#examples-3)
+-   [engine](#engine)
+    -   [Parameters](#parameters-15)
 
 ## API
 
-[src/index.js:22-331](https://github.com/dov-yih/wx-kitsu/blob/0c981d26796274a4dbe01d5af3c945c6d2c42c27/src/index.js#L22-L331 "Source code on GitHub")
+[src/index.js:22-331](https://github.com/dov-yih/wx-kitsu/blob/12186c87b14b4c2ab404dde695154c184a3d9bb3/src/index.js#L22-L331 "Source code on GitHub")
 
 -   **See: wxapp: regeneratorRuntime is not defined <https://developers.weixin.qq.com/community/develop/doc/a39569a8bd172ab387dc2f8c4a80ee8f>**
 -   **See: Documentation: SyntaxError: Using the
@@ -52,7 +55,7 @@
 
 ### get
 
-[src/index.js:117-141](https://github.com/dov-yih/wx-kitsu/blob/0c981d26796274a4dbe01d5af3c945c6d2c42c27/src/index.js#L117-L141 "Source code on GitHub")
+[src/index.js:117-141](https://github.com/dov-yih/wx-kitsu/blob/12186c87b14b4c2ab404dde695154c184a3d9bb3/src/index.js#L117-L141 "Source code on GitHub")
 
 #### Parameters
 
@@ -78,7 +81,7 @@ User.get({
 
 ### get
 
-[src/index.js:117-141](https://github.com/dov-yih/wx-kitsu/blob/0c981d26796274a4dbe01d5af3c945c6d2c42c27/src/index.js#L117-L141 "Source code on GitHub")
+[src/index.js:117-141](https://github.com/dov-yih/wx-kitsu/blob/12186c87b14b4c2ab404dde695154c184a3d9bb3/src/index.js#L117-L141 "Source code on GitHub")
 
 #### Parameters
 
@@ -106,7 +109,7 @@ Returns **any**
 
 ### patch
 
-[src/index.js:152-170](https://github.com/dov-yih/wx-kitsu/blob/0c981d26796274a4dbe01d5af3c945c6d2c42c27/src/index.js#L152-L170 "Source code on GitHub")
+[src/index.js:152-170](https://github.com/dov-yih/wx-kitsu/blob/12186c87b14b4c2ab404dde695154c184a3d9bb3/src/index.js#L152-L170 "Source code on GitHub")
 
 #### Parameters
 
@@ -117,7 +120,7 @@ Returns **any**
 
 ### delete
 
-[src/index.js:180-205](https://github.com/dov-yih/wx-kitsu/blob/0c981d26796274a4dbe01d5af3c945c6d2c42c27/src/index.js#L180-L205 "Source code on GitHub")
+[src/index.js:180-205](https://github.com/dov-yih/wx-kitsu/blob/12186c87b14b4c2ab404dde695154c184a3d9bb3/src/index.js#L180-L205 "Source code on GitHub")
 
 #### Parameters
 
@@ -128,7 +131,7 @@ Returns **any**
 
 ### self
 
-[src/index.js:215-229](https://github.com/dov-yih/wx-kitsu/blob/0c981d26796274a4dbe01d5af3c945c6d2c42c27/src/index.js#L215-L229 "Source code on GitHub")
+[src/index.js:215-229](https://github.com/dov-yih/wx-kitsu/blob/12186c87b14b4c2ab404dde695154c184a3d9bb3/src/index.js#L215-L229 "Source code on GitHub")
 
 #### Parameters
 
@@ -139,7 +142,7 @@ Returns **any**
 
 ### post
 
-[src/index.js:239-255](https://github.com/dov-yih/wx-kitsu/blob/0c981d26796274a4dbe01d5af3c945c6d2c42c27/src/index.js#L239-L255 "Source code on GitHub")
+[src/index.js:239-255](https://github.com/dov-yih/wx-kitsu/blob/12186c87b14b4c2ab404dde695154c184a3d9bb3/src/index.js#L239-L255 "Source code on GitHub")
 
 #### Parameters
 
@@ -150,7 +153,7 @@ Returns **any**
 
 ### setHeader
 
-[src/index.js:266-268](https://github.com/dov-yih/wx-kitsu/blob/0c981d26796274a4dbe01d5af3c945c6d2c42c27/src/index.js#L266-L268 "Source code on GitHub")
+[src/index.js:266-268](https://github.com/dov-yih/wx-kitsu/blob/12186c87b14b4c2ab404dde695154c184a3d9bb3/src/index.js#L266-L268 "Source code on GitHub")
 
 #### Parameters
 
@@ -158,7 +161,7 @@ Returns **any**
 
 ### all
 
-[src/index.js:278-280](https://github.com/dov-yih/wx-kitsu/blob/0c981d26796274a4dbe01d5af3c945c6d2c42c27/src/index.js#L278-L280 "Source code on GitHub")
+[src/index.js:278-280](https://github.com/dov-yih/wx-kitsu/blob/12186c87b14b4c2ab404dde695154c184a3d9bb3/src/index.js#L278-L280 "Source code on GitHub")
 
 返回所有的资源
 
@@ -171,7 +174,7 @@ Returns **any**
 
 ### getById
 
-[src/index.js:291-296](https://github.com/dov-yih/wx-kitsu/blob/0c981d26796274a4dbe01d5af3c945c6d2c42c27/src/index.js#L291-L296 "Source code on GitHub")
+[src/index.js:291-296](https://github.com/dov-yih/wx-kitsu/blob/12186c87b14b4c2ab404dde695154c184a3d9bb3/src/index.js#L291-L296 "Source code on GitHub")
 
 通过 id 来获取资源
 
@@ -185,7 +188,7 @@ Returns **any**
 
 ### update
 
-[src/index.js:306-308](https://github.com/dov-yih/wx-kitsu/blob/0c981d26796274a4dbe01d5af3c945c6d2c42c27/src/index.js#L306-L308 "Source code on GitHub")
+[src/index.js:306-308](https://github.com/dov-yih/wx-kitsu/blob/12186c87b14b4c2ab404dde695154c184a3d9bb3/src/index.js#L306-L308 "Source code on GitHub")
 
 #### Parameters
 
@@ -196,7 +199,7 @@ Returns **any**
 
 ### create
 
-[src/index.js:318-320](https://github.com/dov-yih/wx-kitsu/blob/0c981d26796274a4dbe01d5af3c945c6d2c42c27/src/index.js#L318-L320 "Source code on GitHub")
+[src/index.js:318-320](https://github.com/dov-yih/wx-kitsu/blob/12186c87b14b4c2ab404dde695154c184a3d9bb3/src/index.js#L318-L320 "Source code on GitHub")
 
 #### Parameters
 
@@ -207,7 +210,7 @@ Returns **any**
 
 ### onError
 
-[src/index.js:328-330](https://github.com/dov-yih/wx-kitsu/blob/0c981d26796274a4dbe01d5af3c945c6d2c42c27/src/index.js#L328-L330 "Source code on GitHub")
+[src/index.js:328-330](https://github.com/dov-yih/wx-kitsu/blob/12186c87b14b4c2ab404dde695154c184a3d9bb3/src/index.js#L328-L330 "Source code on GitHub")
 
 统一的错误处理,默认控制台打印
 
@@ -217,7 +220,7 @@ Returns **any**
 
 ## config
 
-[src/config.js:10-17](https://github.com/dov-yih/wx-kitsu/blob/0c981d26796274a4dbe01d5af3c945c6d2c42c27/src/config.js#L10-L17 "Source code on GitHub")
+[src/config.js:10-17](https://github.com/dov-yih/wx-kitsu/blob/12186c87b14b4c2ab404dde695154c184a3d9bb3/src/config.js#L10-L17 "Source code on GitHub")
 
 ### Parameters
 
@@ -232,7 +235,7 @@ Returns **any**
 
 ## modelName
 
-[src/decorators.js:16-20](https://github.com/dov-yih/wx-kitsu/blob/0c981d26796274a4dbe01d5af3c945c6d2c42c27/src/decorators.js#L16-L20 "Source code on GitHub")
+[src/decorators.js:16-20](https://github.com/dov-yih/wx-kitsu/blob/12186c87b14b4c2ab404dde695154c184a3d9bb3/src/decorators.js#L16-L20 "Source code on GitHub")
 
 获取 model name, 默认是当前的类的类名
 
@@ -247,14 +250,49 @@ Returns **any**
 
 ```javascript
 class User extends API {
-   //...
- }
+  //...
+}
  // this.model => User
+```
+
+自定义 model name
+
+
+```javascript
+@modelName('player')
+class User extends API {
+  // ...
+}
+```
+
+## baseURL
+
+[src/decorators.js:34-38](https://github.com/dov-yih/wx-kitsu/blob/12186c87b14b4c2ab404dde695154c184a3d9bb3/src/decorators.js#L34-L38 "Source code on GitHub")
+
+设置 baseURL
+
+### Parameters
+
+-   `url` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+
+### Examples
+
+基本用法
+
+
+```javascript
+@baseURL('localhost:3000')
+class Base extends API {}
+class User extends Base {
+ // ...
+}
+User.getById(1)
+// localhost:3000/user/1
 ```
 
 ## engine
 
-[src/decorators.js:37-41](https://github.com/dov-yih/wx-kitsu/blob/0c981d26796274a4dbe01d5af3c945c6d2c42c27/src/decorators.js#L37-L41 "Source code on GitHub")
+[src/decorators.js:44-48](https://github.com/dov-yih/wx-kitsu/blob/12186c87b14b4c2ab404dde695154c184a3d9bb3/src/decorators.js#L44-L48 "Source code on GitHub")
 
 设置基础请求库: wx 或者 node
 

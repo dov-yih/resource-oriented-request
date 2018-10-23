@@ -8,7 +8,7 @@
     "build": "rollup -c --environment INCLUDE_DEPS,BUILD:production",
     "build:es": "babel -f .babelrc ./src --out-dir ./jsnext",
     "doc:lint": "./node_modules/.bin/documentation lint src/index.js",
-    "doc": "./node_modules/.bin/documentation readme src/index.js --section=API -g true"
+    "doc": "./node_modules/.bin/documentation readme src/index.js --section=API -g true --sort-order source"
   },
   "keywords": [
     "jsonapi",
