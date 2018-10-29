@@ -16,7 +16,7 @@
   "author": "dov yih",
   "license": "BSD-2-Clause",
   "dependencies": {
-    "flyio": "^0.6.2",
+    "axios": "^0.18.0",
     "kitsu-core": "^6.4.0",
     "pluralize": "^7.0.0"
   },
