@@ -1,6 +1,7 @@
 import client from './client'
 import pluralise from 'pluralize'
-import path from 'path'
+// import {join} from 'path'
+import join from 'url-join'
 import {
   camel,
   deserialise,
@@ -10,7 +11,6 @@ import {
   serialise,
   snake
 } from 'kitsu-core'
-
 
 /**
  * @export API
@@ -106,9 +106,6 @@ export default class API {
   static get model() {
     return this.prototype.constructor.name.toLowerCase()
   }
-  static get pathname() {
-    return path.join(this.prefix, this.model)
-  }
   /**
    *
    *
@@ -138,7 +135,7 @@ export default class API {
         ...params
       } = body
 
-      let url = this.plural(this.resCase(this.pathname))
+      let url = join(this.prefix, this.plural(this.resCase(this.model)))
       if (id) url += `/${id}`
       if (relationship) url += `/${this.resCase(relationship)}`
 
@@ -164,7 +161,7 @@ export default class API {
    */
   static async patch (body, headers = {}) {
     try {
-      const model = this.pathname
+      const model = this.model
       const serialData = await serialise.apply(this, [model, body, 'PUT'])
       const url = this.plural(this.resCase(model)) + '/' + body.id
       const {
@@ -192,7 +189,7 @@ export default class API {
    */
   static async delete (id, headers = {}) {
     try {
-      let model = this.pathname
+      let model = this.model
       const url = this.plural(this.resCase(model)) + '/' + id
       const {
         data
@@ -251,7 +248,7 @@ export default class API {
    */
   static async post (body, headers = {}) {
     try {
-      const model = this.pathname
+      const model = this.model
       const url = this.plural(this.resCase(model))
       const {
         data
@@ -339,9 +336,8 @@ export default class API {
    * @memberof API
    */
   static onError (e) {
-    console.log( this.pathname + ' on error:', e)
+    console.log( this.model + ' on error:', e)
   }
 }
-
 export * from './decorators'
-export { API }
+export { API,join }
