@@ -1,5 +1,6 @@
 import client from './client'
 import pluralise from 'pluralize'
+import path from 'path'
 import {
   camel,
   deserialise,
@@ -84,21 +85,13 @@ export default class API {
   static resCase = camel
 
   /**
-   * @param {Object} body
-   * @param {number} body.id
-   * @param {string} body.relationship
-   * @param {Object} params
-   * @param {Object} headers
-   * @example Basic Usage
-   * User.get({
-   *    id: 1,
-   *    relationship: 'json',
-   *    msg: 'test',
-   *    ...
-   *  },
-   *  {'X-tag': 'costom-tag'}
-   * )
+   * 设置当前资源的前缀
+   *
+   * @static
+   * @memberof API
+   * @access public
    */
+  static prefix = ''
   /**
    * 返回当前类的类名
    *
@@ -112,6 +105,9 @@ export default class API {
    */
   static get model() {
     return this.prototype.constructor.name.toLowerCase()
+  }
+  static get pathname() {
+    return path.join(this.prefix, this.model)
   }
   /**
    *
@@ -142,7 +138,7 @@ export default class API {
         ...params
       } = body
 
-      let url = this.plural(this.resCase(this.model))
+      let url = this.plural(this.resCase(this.pathname))
       if (id) url += `/${id}`
       if (relationship) url += `/${this.resCase(relationship)}`
 
@@ -168,7 +164,7 @@ export default class API {
    */
   static async patch (body, headers = {}) {
     try {
-      const model = this.model
+      const model = this.pathname
       const serialData = await serialise.apply(this, [model, body, 'PUT'])
       const url = this.plural(this.resCase(model)) + '/' + body.id
       const {
@@ -196,7 +192,7 @@ export default class API {
    */
   static async delete (id, headers = {}) {
     try {
-      let model = this.model
+      let model = this.pathname
       const url = this.plural(this.resCase(model)) + '/' + id
       const {
         data
@@ -255,7 +251,7 @@ export default class API {
    */
   static async post (body, headers = {}) {
     try {
-      const model = this.model
+      const model = this.pathname
       const url = this.plural(this.resCase(model))
       const {
         data
@@ -343,7 +339,7 @@ export default class API {
    * @memberof API
    */
   static onError (e) {
-    console.log( this.model + ' on error:', e)
+    console.log( this.pathname + ' on error:', e)
   }
 }
 
