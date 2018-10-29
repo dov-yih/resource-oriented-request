@@ -1,4 +1,3 @@
-// import Kitsu from './kitsu'
 import client from './client'
 import pluralise from 'pluralize'
 import {
@@ -6,6 +5,7 @@ import {
   deserialise,
   // error,
   // kebab,
+  query,
   serialise,
   snake
 } from 'kitsu-core'
@@ -15,11 +15,6 @@ function getModelName (target, name, descriptor) {
   target.model = target.getModelName()
 }
 
-
-/**
- * 
- * @see https://developers.weixin.qq.com/community/develop/doc/a39569a8bd172ab387dc2f8c4a80ee8f
- *  */ 
 @getModelName
 export default class API {
   static getModelName () {
@@ -62,12 +57,9 @@ export default class API {
       if (id) url += `/${id}`
       if (relationship) url += `/${this.resCase(relationship)}`
 
-      const {
-        data
-      } = await this.axios.get(url, {
+      const {data} = await this.axios.get(url, {
         params,
-        // @FIXME flyio 不支持 paramsSerializer
-        // paramsSerializer: p => query(p),
+        paramsSerializer: p => query(p),
         headers: Object.assign(this.headers, headers)
       })
       return deserialise(data)
