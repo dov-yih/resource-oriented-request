@@ -106,11 +106,9 @@ export default class API {
    * @static
    * @memberof API
    * @example
-   * ```
    * class Test extends API {}
    * this.model
    * // test
-   * ```
    */
   static get model() {
     return this.prototype.constructor.name.toLowerCase()

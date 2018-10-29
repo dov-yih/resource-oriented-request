@@ -1,19 +1,20 @@
 {
-  "name": "wx-kitsu-jsonapi",
-  "version": "0.1.3",
-  "description": "weixin jsoonapi by kitsu",
+  "name": "resource-oriented-request",
+  "version": "0.1.4",
+  "description": "resource-oriented request",
   "main": "lib/index.js",
   "scripts": {
     "test": "test",
     "build": "rollup -c --environment INCLUDE_DEPS,BUILD:production",
     "build:es": "babel -f .babelrc ./src --out-dir ./jsnext",
     "doc:lint": "./node_modules/.bin/documentation lint src/index.js",
-    "doc": "./node_modules/.bin/documentation readme src/index.js --section=API -g true --sort-order source"
+    "doc": "./node_modules/.bin/documentation build src/index.js -f md > docs/api.md --sort-order source"
   },
   "keywords": [
     "jsonapi",
     "wx",
-    "kitsu"
+    "kitsu",
+    "request"
   ],
   "author": "dov yih",
   "license": "BSD-2-Clause",
