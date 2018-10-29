@@ -1,4 +1,6 @@
-const assert = require('assert')
+// import assert from 'assert'
+const assert = require('power-assert')
+// import API, { baseURL} from '../src'
 const {API, baseURL} = require('../lib')
 describe('@baseURL should not cover the old',() => {
   it('prefix', () => {
@@ -8,7 +10,7 @@ describe('@baseURL should not cover the old',() => {
     class Test2 extends Base {
       static prefix = 'v2'
     }
-    assert(Test.model, 'test')
-    assert(Test.model, 'v2/test')
+    assert.equal(Test.pathname, 'test')
+    assert.equal(Test2.pathname, 'v2/test2')
   })
 })

@@ -5,6 +5,7 @@
     }]
   ],
   "plugins": [
+    "babel-plugin-espower",
     [
       "@babel/plugin-transform-runtime",
       {
