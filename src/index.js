@@ -1,6 +1,5 @@
 import client from './client'
 import pluralise from 'pluralize'
-// import {join} from 'path'
 import join from 'url-join'
 import {
   camel,
@@ -38,21 +37,38 @@ export default class API {
    */
   static plural = pluralise
   /**
-   * 默认的 header
+   * 继承子类自定 headers 的缓存对象
    *
    * @static
    * @memberof API
    * @todo 添加默认的 JSON-API 的请求头
    * @access private
    */
-  static headers = {}
+  static _headers = {}
+
   /**
-   * 配置对象
+   *
    *
    * @static
    * @memberof API
    */
-  static config = {}
+  static set config(customConfig = {}) {
+    Object.assign({}, this.axios.defaults, customConfig)
+  }
+  static get headers() {
+    // 防止覆盖
+    return Object.assign({}, this._headers)
+  }
+  /**
+   *
+   *
+   * @static
+   * @param {*} [header={}]
+   * @memberof API
+   */
+  static set headers(headers = {}) {
+    this._headers = headers
+  }
   /**
    * 资源名的命名风格
    *
@@ -110,6 +126,20 @@ export default class API {
    *
    *
    * @static
+   * @param {*} id
+   * @returns
+   * @memberof API
+   */
+  static pathname(id) {
+    let pathname = join(this.prefix, this.plural(this.resCase(this.model)))
+    if(id) pathname += '/' + id
+    console.log(pathname)
+    return pathname
+  }
+  /**
+   *
+   *
+   * @static
    * @param {Object} body
    * @param {number} body.id
    * @param {string} body.relationship
@@ -127,7 +157,7 @@ export default class API {
    *  {'X-tag': 'costom-tag'}
    * )
    */
-  static async get (body = {}, headers = {}) {
+  static async get(body = {}, headers = {}) {
     try {
       let {
         id,
@@ -135,11 +165,14 @@ export default class API {
         ...params
       } = body
 
-      let url = join(this.prefix, this.plural(this.resCase(this.model)))
+      let url = this.pathname()
+
       if (id) url += `/${id}`
       if (relationship) url += `/${this.resCase(relationship)}`
 
-      const {data} = await this.axios.get(url, {
+      const {
+        data
+      } = await this.axios.get(url, {
         params,
         paramsSerializer: p => query(p),
         headers: Object.assign(this.headers, headers)
@@ -159,11 +192,11 @@ export default class API {
    * @returns
    * @memberof API
    */
-  static async patch (body, headers = {}) {
+  static async patch(body, headers = {}) {
     try {
       const model = this.model
       const serialData = await serialise.apply(this, [model, body, 'PUT'])
-      const url = this.plural(this.resCase(model)) + '/' + body.id
+      const url = this.pathname(body.id)
       const {
         data
       } = await this.axios.put(
@@ -187,10 +220,10 @@ export default class API {
    * @returns
    * @memberof API
    */
-  static async delete (id, headers = {}) {
+  static async delete(id, headers = {}) {
     try {
       let model = this.model
-      const url = this.plural(this.resCase(model)) + '/' + id
+      const url = this.pathname(id)
       const {
         data
       } = await this.axios.delete(
@@ -222,12 +255,15 @@ export default class API {
    * @returns
    * @memberof API
    */
-  static async self (params = {}, headers = {}) {
+  static async self(params = {}, headers = {}) {
     try {
       const res = await this.get(
         'users', // users ??
-        Object.assign(
-          {filter: {self: true}},
+        Object.assign({
+            filter: {
+              self: true
+            }
+          },
           params
         ),
         headers
@@ -246,10 +282,10 @@ export default class API {
    * @returns
    * @memberof API
    */
-  static async post (body, headers = {}) {
+  static async post(body, headers = {}) {
     try {
       const model = this.model
-      const url = this.plural(this.resCase(model))
+      const url = this.pathname()
       const {
         data
       } = await this.axios.post(
@@ -265,17 +301,7 @@ export default class API {
   }
 
 
-  /**
-   *
-   *
-   * @static
-   * @param {*} [header={}]
-   * @memberof API
-   * @todo 警告:这个api可能被删除
-   */
-  static setHeader (header = {}) {
-    this.headers = Object.assign(this.headers, header)
-  }
+
   /**
    * 返回所有的资源
    *
@@ -285,7 +311,7 @@ export default class API {
    * @returns
    * @memberof API
    */
-  static async all (params = {}, headers = {}) {
+  static async all(params = {}, headers = {}) {
     return this.get(params, headers)
   }
   /**
@@ -298,9 +324,11 @@ export default class API {
    * @returns
    * @memberof API
    */
-  static async getById (id, params = {}, headers = {}) {
-    return this.get(
-      { id, ...params },
+  static async getById(id, params = {}, headers = {}) {
+    return this.get({
+        id,
+        ...params
+      },
       headers
     )
   }
@@ -313,7 +341,7 @@ export default class API {
    * @returns
    * @memberof API
    */
-  static async update (params = {}, headers = {}) {
+  static async update(params = {}, headers = {}) {
     return this.patch(params, headers)
   }
   /**
@@ -325,7 +353,7 @@ export default class API {
    * @returns
    * @memberof API
    */
-  static async create (params = {}, headers = {}) {
+  static async create(params = {}, headers = {}) {
     return this.post(params, headers)
   }
   /**
@@ -335,9 +363,12 @@ export default class API {
    * @param {*} e
    * @memberof API
    */
-  static onError (e) {
-    console.log( this.model + ' on error:', e)
+  static onError(e) {
+    console.log(this.model + ' on error:', e)
   }
 }
 export * from './decorators'
-export { API,join }
+export {
+  API,
+  join
+}
