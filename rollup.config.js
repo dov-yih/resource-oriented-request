@@ -2,8 +2,7 @@ import commonjs from "rollup-plugin-commonjs";
 import babel from "rollup-plugin-babel";
 import {
   terser
-}
-from "rollup-plugin-terser";
+} from "rollup-plugin-terser";
 import filesize from 'rollup-plugin-filesize'
 
 export default {
@@ -27,4 +26,4 @@ export default {
       }
     }),
   ],
-};
+}
