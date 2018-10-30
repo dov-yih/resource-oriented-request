@@ -5,7 +5,6 @@ import axios from 'axios'
 axios.defaults.timeout = 3000
 
 // 公共 Headers
-// axios.config.headers['X-Tag'] = 'axios'
 axios.defaults.headers.common['Content-Type'] = 'application/json'
 // 服务器地址
 axios.defaults.baseURL = 'http://localhost:7001'
@@ -14,7 +13,7 @@ axios.defaults.baseURL = 'http://localhost:7001'
 axios.interceptors.request
   .use((config) => {
     // 打印请求体
-    console.log('fly请求体 -->>>%o', config)
+    // console.log('fly请求体 -->>>%o', config)
 
     return config
   })
@@ -23,8 +22,7 @@ axios.interceptors.request
 axios.interceptors.response
   .use(response => {
     // 打印返回体
-    console.log('fly返回体 -->>>%o', response.data)
-    // @TODO 这里返回 data ??
+    // console.log('fly返回体 -->>>%o', response.data)
     return response
   },
   /*

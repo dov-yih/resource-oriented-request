@@ -338,24 +338,22 @@ export default class API {
    * @static
    * @param {*} [params={}]
    * @param {*} [headers={}]
+   * @alias this.patch
    * @returns
    * @memberof API
    */
-  static async update(params = {}, headers = {}) {
-    return this.patch(params, headers)
-  }
+  static update = API.patch
   /**
    *
    *
    * @static
    * @param {*} [params={}]
    * @param {*} [headers={}]
+   * @alias this.post
    * @returns
    * @memberof API
    */
-  static async create(params = {}, headers = {}) {
-    return this.post(params, headers)
-  }
+  static create = API.post
   /**
    * 统一的错误处理,默认控制台打印
    *
