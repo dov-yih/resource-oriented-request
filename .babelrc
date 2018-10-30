@@ -1,7 +1,8 @@
 {
   "presets": [
+    "power-assert",
     ["@babel/env", {
-      "modules": false
+      "modules": "cjs"
     }]
   ],
   "plugins": [
@@ -9,10 +10,10 @@
     [
       "@babel/plugin-transform-runtime",
       {
-         "corejs": false,
-         "helpers": false,
-         "regenerator": true,
-         "useESModules": true
+        "corejs": false,
+        "helpers": false,
+        "regenerator": true,
+        "useESModules": true
       }
     ],
     ["@babel/plugin-proposal-decorators", {

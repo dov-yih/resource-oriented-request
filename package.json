@@ -5,7 +5,7 @@
   "main": "lib/index.js",
   "module": "jsnext/index.js",
   "scripts": {
-    "test": "yarn build && ./node_modules/.bin/mocha --require @babel/register test/**/*.test.js",
+    "test": "./node_modules/.bin/mocha --require @babel/register test/**/*.test.js",
     "build": "rollup -c --environment INCLUDE_DEPS,BUILD:production",
     "build:es": "babel -f .babelrc ./src --out-dir ./jsnext",
     "doc:lint": "./node_modules/.bin/documentation lint src/index.js",
@@ -33,6 +33,7 @@
     "@babel/preset-env": "^7.1.0",
     "@babel/register": "^7.0.0",
     "babel-plugin-espower": "^3.0.0",
+    "babel-preset-power-assert": "^3.0.0",
     "cz-conventional-changelog": "^2.1.0",
     "documentation": "9.0.0-alpha.0",
     "mocha": "^5.2.0",

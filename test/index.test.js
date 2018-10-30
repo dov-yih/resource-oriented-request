@@ -1,7 +1,7 @@
 // import assert from 'assert'
 const assert = require('power-assert')
 // import API, { baseURL} from '../src'
-const {API, baseURL} = require('../lib')
+const {API, baseURL} = require('../src')
 describe('@baseURL should not cover the old',() => {
   @baseURL('http://localhost:3000')
   class Base extends API {}

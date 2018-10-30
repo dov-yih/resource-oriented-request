@@ -16,6 +16,29 @@ function commonConfig(outputDir, format) {
     plugins: [
       builtins(),
       babel({
+        babelrc: false,
+        presets: [
+          ["@babel/env", {
+            "modules": false
+          }],
+        ],
+         plugins: [
+          [
+            "@babel/plugin-transform-runtime",
+            {
+              "corejs": false,
+              "helpers": false,
+              "regenerator": true,
+              "useESModules": true
+            }
+          ],
+          ["@babel/plugin-proposal-decorators", {
+            "legacy": true
+          }],
+          ["@babel/plugin-proposal-class-properties", {
+            "loose": true
+          }]
+        ],
         exclude: "node_modules/**",
         runtimeHelpers: true
       }),
@@ -32,6 +55,6 @@ function commonConfig(outputDir, format) {
   }
 }
 export default [
-  commonConfig('lib','cjs'),
-  commonConfig('jsnext','esm')
+  commonConfig('lib', 'cjs'),
+  commonConfig('jsnext', 'esm')
 ]
