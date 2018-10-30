@@ -4,6 +4,9 @@ Resource-oriented request
 
 # Usage
 
+```sh
+yarn add resource-oriented-request
+```
 # example
 
 ## Basic
