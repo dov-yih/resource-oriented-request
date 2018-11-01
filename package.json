@@ -3,7 +3,6 @@
   "version": "0.1.5",
   "description": "resource-oriented request",
   "main": "lib/index.js",
-  "module": "jsnext/index.js",
   "scripts": {
     "test": "./node_modules/.bin/mocha --require @babel/register test/**/*.test.js",
     "build": "rollup -c --environment INCLUDE_DEPS,BUILD:production",

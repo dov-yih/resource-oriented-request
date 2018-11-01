@@ -4,7 +4,7 @@ import join from 'url-join'
 import {
   camel,
   deserialise,
-  // error,
+  error,
   // kebab,
   query,
   serialise,
@@ -35,16 +35,13 @@ export default class API {
    * @memberof API
    * @access private
    */
-  static plural = pluralise
-  /**
-   * 继承子类自定 headers 的缓存对象
-   *
-   * @static
-   * @memberof API
-   * @todo 添加默认的 JSON-API 的请求头
-   * @access private
-   */
-  static _headers = {}
+  static _plural = pluralise
+  static set plural (func) {
+    if (typeof func !== 'function') {
+      throw TypeError('API.plural MUST BE a function!')
+    }
+    this._plural = func
+  }
 
   /**
    *
@@ -60,6 +57,15 @@ export default class API {
     return Object.assign({}, this._headers)
   }
   /**
+   * 继承子类自定 headers 的缓存对象
+   *
+   * @static
+   * @memberof API
+   * @todo 添加默认的 JSON-API 的请求头
+   * @access private
+   */
+  static _headers = {}
+  /**
    *
    *
    * @static
@@ -67,6 +73,7 @@ export default class API {
    * @memberof API
    */
   static set headers(headers = {}) {
+    console.log('set headers', headers)
     this._headers = headers
   }
   /**
@@ -107,7 +114,13 @@ export default class API {
    * @memberof API
    * @access public
    */
-  static prefix = ''
+  static _prefix = ''
+  static set prefix(prefix) {
+    this._prefix = prefix
+  }
+  static get prefix() {
+    return this._prefix
+  }
   /**
    * 返回当前类的类名
    *
@@ -131,9 +144,8 @@ export default class API {
    * @memberof API
    */
   static pathname(id) {
-    let pathname = join(this.prefix, this.plural(this.resCase(this.model)))
-    if(id) pathname += '/' + id
-    console.log(pathname)
+    let pathname = join(this.prefix, this._plural(this.resCase(this.model)))
+    if (id) pathname += '/' + id
     return pathname
   }
   /**
@@ -175,11 +187,11 @@ export default class API {
       } = await this.axios.get(url, {
         params,
         paramsSerializer: p => query(p),
-        headers: Object.assign(this.headers, headers)
+        headers: Object.assign({}, this.headers, headers)
       })
       return deserialise(data)
     } catch (E) {
-      this.onError(E)
+      throw error(E)
     }
   }
 
@@ -208,7 +220,7 @@ export default class API {
 
       return data
     } catch (E) {
-      this.onError(E)
+      throw error(E)
     }
   }
   /**
@@ -243,7 +255,7 @@ export default class API {
 
       return data
     } catch (E) {
-      this.onError(E)
+      throw error(E)
     }
   }
   /**
@@ -270,7 +282,7 @@ export default class API {
       )
       return res.data[0]
     } catch (E) {
-      this.onError(E)
+      throw error(E)
     }
   }
   /**
@@ -296,7 +308,7 @@ export default class API {
       )
       return data
     } catch (E) {
-      this.onError(E)
+      throw error(E)
     }
   }
 
@@ -365,8 +377,8 @@ export default class API {
     console.log(this.model + ' on error:', e)
   }
 }
+
 export * from './decorators'
 export {
-  API,
-  join
+  API
 }
