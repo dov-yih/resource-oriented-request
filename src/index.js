@@ -35,12 +35,12 @@ export default class API {
    * @memberof API
    * @access private
    */
-  static _plural = pluralise
-  static set plural (func) {
+  static plural = pluralise
+  static set pluralise(func) {
     if (typeof func !== 'function') {
       throw TypeError('API.plural MUST BE a function!')
     }
-    this._plural = func
+    this.plural = func
   }
 
   /**
@@ -73,7 +73,6 @@ export default class API {
    * @memberof API
    */
   static set headers(headers = {}) {
-    console.log('set headers', headers)
     this._headers = headers
   }
   /**
@@ -144,7 +143,7 @@ export default class API {
    * @memberof API
    */
   static pathname(id) {
-    let pathname = join(this.prefix, this._plural(this.resCase(this.model)))
+    let pathname = join(this.prefix, this.plural(this.resCase(this.model)))
     if (id) pathname += '/' + id
     return pathname
   }
@@ -258,6 +257,34 @@ export default class API {
       throw error(E)
     }
   }
+
+  /**
+   *
+   *
+   * @static
+   * @param {*} body
+   * @param {*} [headers={}]
+   * @returns
+   * @memberof API
+   */
+  static async post(body, headers = {}) {
+    try {
+      const model = this.model
+      const url = this.pathname()
+      const {
+        data
+      } = await this.axios.post(
+        url,
+        await serialise.apply(this, [model, body]), {
+          headers: Object.assign({}, this.headers, headers)
+        }
+      )
+      return data
+    } catch (E) {
+      throw error(E)
+    }
+  }
+
   /**
    *
    *
@@ -285,34 +312,6 @@ export default class API {
       throw error(E)
     }
   }
-  /**
-   *
-   *
-   * @static
-   * @param {*} body
-   * @param {*} [headers={}]
-   * @returns
-   * @memberof API
-   */
-  static async post(body, headers = {}) {
-    try {
-      const model = this.model
-      const url = this.pathname()
-      const {
-        data
-      } = await this.axios.post(
-        url,
-        await serialise.apply(this, [model, body]), {
-          headers: Object.assign(this.headers, headers)
-        }
-      )
-      return data
-    } catch (E) {
-      throw error(E)
-    }
-  }
-
-
 
   /**
    * 返回所有的资源
@@ -344,6 +343,7 @@ export default class API {
       headers
     )
   }
+
   /**
    *
    *
@@ -366,6 +366,7 @@ export default class API {
    * @memberof API
    */
   static create = API.post
+
   /**
    * 统一的错误处理,默认控制台打印
    *
@@ -376,6 +377,7 @@ export default class API {
   static onError(e) {
     console.log(this.model + ' on error:', e)
   }
+
 }
 
 export * from './decorators'
