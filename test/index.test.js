@@ -39,4 +39,12 @@ describe('@baseURL should not cover the old baseURL',() => {
       console.log(resp)
     })
   })
+  it('plural:', () => {
+    class User extends Base {}
+    class Post extends Base {
+      static pluralise = s => s
+    }
+    assert.equal(Post.plural('post'), 'post')
+    assert.equal(User.plural('user'), 'users')
+  })
 })
