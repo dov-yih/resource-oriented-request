@@ -22,24 +22,26 @@ class Post extends Base {
     'X-Tags': 'test'
   }
 
-  static onError(e) {
-    console.log(e)
+  static archives() {
+    return this.get('archives')
   }
 }
-async () => {
-  const data = await Post.get()
-  // => GET http://localhost:3000/posts
 
-  data = await Post.getById(1)
-  // => GET http://localhost:3000/posts/1
+await Post.get()
+// => GET http://localhost:3000/posts
 
-  data = await Post.post({
-    title: 'test title',
-    context: 'long long long context',
-  })
-  // => POST http://localhost:3000/posts
-  // Form data: {title: 'test title',context: 'long long long context'})
-}
+await Post.getById(1)
+// => GET http://localhost:3000/posts/1
+
+await Post.archives()
+// => GET http://localhost:3000/posts/archives
+
+await Post.post({
+  title: 'test title',
+  context: 'long long long context',
+})
+// => POST http://localhost:3000/posts
+// Form data: {title: 'test title',context: 'long long long context'})
 ```
 
 ## Prefix
@@ -47,18 +49,17 @@ async () => {
 class Post extends Base {
   static prefix = 'admin'
 }
-async () => {
-  const data = await Post.get()
-  // => GET http://localhost:3000/admin/posts
-  data = await Post.getById(1)
-  // => GET http://localhost:3000/admin/posts/1
-  data = await Post.post({
-    title: 'test title',
-    context: 'long long long context',
-  })
-  // => POST http://localhost:3000/admin/posts
-  // form data: {title: 'test title',context: 'long long long context'})
-}
+
+await Post.get()
+// => GET http://localhost:3000/admin/posts
+await Post.getById(1)
+// => GET http://localhost:3000/admin/posts/1
+await Post.post({
+  title: 'test title',
+  context: 'long long long context',
+})
+// => POST http://localhost:3000/admin/posts
+// form data: {title: 'test title',context: 'long long long context'})
 ```
 
 ## Headers
@@ -70,7 +71,7 @@ class Post extends Base {
   }
 }
 async () => {
-  const data = await Post.get()
+  const await Post.get()
   // => GET http://localhost:3000/admin/posts
   // Requset Header:
   // ...

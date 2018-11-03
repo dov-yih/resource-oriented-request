@@ -4,97 +4,82 @@
 
 -   [API][1]
     -   [config][2]
-    -   [model][3]
-        -   [Parameters][4]
-        -   [Examples][5]
-    -   [model][6]
-        -   [Examples][7]
-    -   [get][8]
-        -   [Parameters][9]
-        -   [Examples][10]
-    -   [patch][11]
-        -   [Parameters][12]
-    -   [delete][13]
-        -   [Parameters][14]
-    -   [self][15]
-        -   [Parameters][16]
-    -   [post][17]
-        -   [Parameters][18]
-    -   [setHeader][19]
-        -   [Parameters][20]
-    -   [all][21]
-        -   [Parameters][22]
-    -   [getById][23]
-        -   [Parameters][24]
-    -   [update][25]
-        -   [Parameters][26]
-    -   [create][27]
-        -   [Parameters][28]
-    -   [onError][29]
-        -   [Parameters][30]
--   [baseURL][31]
-    -   [Parameters][32]
-    -   [Examples][33]
--   [config][34]
-    -   [Parameters][35]
-    -   [Examples][36]
+        -   [Parameters][3]
+    -   [headers][4]
+        -   [Parameters][5]
+        -   [Examples][6]
+    -   [get][7]
+        -   [Parameters][8]
+        -   [Examples][9]
+    -   [API.patch][10]
+        -   [Parameters][11]
+    -   [delete][12]
+        -   [Parameters][13]
+    -   [API.post][14]
+        -   [Parameters][15]
+    -   [self][16]
+        -   [Parameters][17]
+    -   [all][18]
+        -   [Parameters][19]
+    -   [getById][20]
+        -   [Parameters][21]
+    -   [patch][22]
+        -   [Parameters][23]
+    -   [post][24]
+        -   [Parameters][25]
+-   [baseURL][26]
+    -   [Parameters][27]
+    -   [Examples][28]
+-   [config][29]
+    -   [Parameters][30]
+    -   [Examples][31]
 
 ## API
 
--   **See: wxapp: regeneratorRuntime is not defined [https://developers.weixin.qq.com/community/develop/doc/a39569a8bd172ab387dc2f8c4a80ee8f][37]**
+-   **See: wxapp: regeneratorRuntime is not defined [https://developers.weixin.qq.com/community/develop/doc/a39569a8bd172ab387dc2f8c4a80ee8f][32]**
 -   **See: Documentation: SyntaxError: Using the
     export keyword between a decorator and a class is not allowed.Please use `export @dec class`
-    instead. [https://github.com/documentationjs/documentation/issues/996#issuecomment-423644403][38]**
+    instead. [https://github.com/documentationjs/documentation/issues/996#issuecomment-423644403][33]**
 
 ### config
 
-配置对象
+#### Parameters
 
-### model
+-   `customConfig`   (optional, default `{}`)
+
+### headers
+
+设置子类的 header
 
 #### Parameters
 
--   `body` **[Object][39]** 
-    -   `body.id` **[number][40]** 
-    -   `body.relationship` **[string][41]** 
--   `params` **[Object][39]** 
--   `headers` **[Object][39]** 
+-   `headers`   (optional, default `{}`)
+-   `header` **any**  (optional, default `{}`)
 
 #### Examples
 
 ```javascript
-Basic Usage
-User.get({
-   id: 1,
-   relationship: 'json',
-   msg: 'test',
-   ...
- },
- {'X-tag': 'costom-tag'}
-)
-```
-
-### model
-
-返回当前类的类名
-
-#### Examples
-
-```javascript
-class Test extends API {}
-this.model
-// test
+class Post extends Base {
+  static headers = {
+     'X-Test-Tag': 'test'
+  }
+}
+// request => {
+//   'Accept': 'application/json',
+//   'Content-Type': 'application/json',
+//   'X-Test-Tag': 'test',
+// }
 ```
 
 ### get
 
 #### Parameters
 
--   `body` **[Object][39]**  (optional, default `{}`)
-    -   `body.id` **[number][40]** 
-    -   `body.relationship` **[string][41]** 
--   `headers` **[Object][39]**  (optional, default `{}`)
--   `params` **[Object][39]** 
+-   `action` **[string][34]**  (optional, default `''`)
+-   `body` **[Object][35]**  (optional, default `{}`)
+    -   `body.id` **[number][36]** 
+    -   `body.relationship` **[string][34]** 
+-   `headers` **[Object][35]**  (optional, default `{}`)
 
 #### Examples
 
@@ -110,16 +95,26 @@ User.get({
 )
 ```
 
-Returns **any** 
+```javascript
+Post.get('archives')
+// post/archives
+```
 
-### patch
+-   Throws **[Error][37]** formatted JAONAPI error
+
+Returns **[Promise][38]** Axios Response
+
+### API.patch
 
 #### Parameters
 
 -   `body` **any** 
 -   `headers` **any**  (optional, default `{}`)
 
-Returns **any** 
+
+-   Throws **[Error][37]** formatted JAONAPI error
+
+Returns **[Promise][38]** Axios Response
 
 ### delete
 
@@ -128,7 +123,22 @@ Returns **any**
 -   `id` **any** 
 -   `headers` **any**  (optional, default `{}`)
 
-Returns **any** 
+
+-   Throws **[Error][37]** formatted JAONAPI error
+
+Returns **[Promise][38]** Axios Response
+
+### API.post
+
+#### Parameters
+
+-   `body` **any** 
+-   `headers` **any**  (optional, default `{}`)
+
+
+-   Throws **[Error][37]** formatted JAONAPI error
+
+Returns **[Promise][38]** Axios Response
 
 ### self
 
@@ -137,22 +147,10 @@ Returns **any**
 -   `params` **any**  (optional, default `{}`)
 -   `headers` **any**  (optional, default `{}`)
 
-Returns **any** 
 
-### post
+-   Throws **[Error][37]** formatted JAONAPI error
 
-#### Parameters
-
--   `body` **any** 
--   `headers` **any**  (optional, default `{}`)
-
-Returns **any** 
-
-### setHeader
-
-#### Parameters
-
--   `header` **any**  (optional, default `{}`)
+Returns **[Promise][38]** Axios Response
 
 ### all
 
@@ -163,7 +161,10 @@ Returns **any**
 -   `params` **any**  (optional, default `{}`)
 -   `headers` **any**  (optional, default `{}`)
 
-Returns **any** 
+
+-   Throws **[Error][37]** formatted JAONAPI error
+
+Returns **[Promise][38]** Axios Response
 
 ### getById
 
@@ -175,18 +176,14 @@ Returns **any**
 -   `params` **any**  (optional, default `{}`)
 -   `headers` **any**  (optional, default `{}`)
 
-Returns **any** 
 
-### update
+-   Throws **[Error][37]** formatted JAONAPI error
 
-#### Parameters
+Returns **[Promise][38]** Axios Response
 
--   `params` **any**  (optional, default `{}`)
--   `headers` **any**  (optional, default `{}`)
+### patch
 
-Returns **any** 
-
-### create
+API.patch 的别名
 
 #### Parameters
 
@@ -195,13 +192,16 @@ Returns **any**
 
 Returns **any** 
 
-### onError
+### post
 
-统一的错误处理,默认控制台打印
+API.post 的别名
 
 #### Parameters
 
--   `e` **any** 
+-   `params` **any**  (optional, default `{}`)
+-   `headers` **any**  (optional, default `{}`)
+
+Returns **any** 
 
 ## baseURL
 
@@ -209,7 +209,7 @@ Returns **any**
 
 ### Parameters
 
--   `url` **[string][41]** 
+-   `url` **[string][34]** 
 
 ### Examples
 
@@ -254,80 +254,74 @@ Returns **any**
 
 [2]: #config
 
-[3]: #model
+[3]: #parameters
 
-[4]: #parameters
+[4]: #headers
 
-[5]: #examples
+[5]: #parameters-1
 
-[6]: #model-1
+[6]: #examples
 
-[7]: #examples-1
+[7]: #get
 
-[8]: #get
+[8]: #parameters-2
 
-[9]: #parameters-1
+[9]: #examples-1
 
-[10]: #examples-2
+[10]: #apipatch
 
-[11]: #patch
+[11]: #parameters-3
 
-[12]: #parameters-2
+[12]: #delete
 
-[13]: #delete
+[13]: #parameters-4
 
-[14]: #parameters-3
+[14]: #apipost
 
-[15]: #self
+[15]: #parameters-5
 
-[16]: #parameters-4
+[16]: #self
 
-[17]: #post
+[17]: #parameters-6
 
-[18]: #parameters-5
+[18]: #all
 
-[19]: #setheader
+[19]: #parameters-7
 
-[20]: #parameters-6
+[20]: #getbyid
 
-[21]: #all
+[21]: #parameters-8
 
-[22]: #parameters-7
+[22]: #patch
 
-[23]: #getbyid
+[23]: #parameters-9
 
-[24]: #parameters-8
+[24]: #post
 
-[25]: #update
+[25]: #parameters-10
 
-[26]: #parameters-9
+[26]: #baseurl
 
-[27]: #create
+[27]: #parameters-11
 
-[28]: #parameters-10
+[28]: #examples-2
 
-[29]: #onerror
+[29]: #config-1
 
-[30]: #parameters-11
+[30]: #parameters-12
 
-[31]: #baseurl
+[31]: #examples-3
 
-[32]: #parameters-12
+[32]: https://developers.weixin.qq.com/community/develop/doc/a39569a8bd172ab387dc2f8c4a80ee8f
 
-[33]: #examples-3
+[33]: https://github.com/documentationjs/documentation/issues/996#issuecomment-423644403
 
-[34]: #config-1
+[34]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
 
-[35]: #parameters-13
+[35]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object
 
-[36]: #examples-4
+[36]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number
 
-[37]: https://developers.weixin.qq.com/community/develop/doc/a39569a8bd172ab387dc2f8c4a80ee8f
+[37]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Error
 
-[38]: https://github.com/documentationjs/documentation/issues/996#issuecomment-423644403
-
-[39]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object
-
-[40]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number
-
-[41]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
+[38]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise
