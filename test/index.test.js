@@ -2,9 +2,11 @@
 const assert = require('power-assert')
 // import API, { baseURL} from '../src'
 const {API, baseURL} = require('../src')
+// GLOBAL !!!
+@baseURL('http://localhost:3000')
+class Base extends API {}
+
 describe('@baseURL should not cover the old baseURL',() => {
-  @baseURL('http://localhost:3000')
-  class Base extends API {}
   it('prefix can\'t overwrite:', () => {
     class User extends Base {}
     class Post extends Base {
@@ -34,9 +36,6 @@ describe('@baseURL should not cover the old baseURL',() => {
     assert.deepEqual(Post.headers, {
       // 'X-Tag': 'test-Post',
       'X-AXIOS': 'Static'
-    })
-    User.create({id: 1,text: 'adsfsf'}).then(resp => {
-      console.log(resp)
     })
   })
   it('plural:', () => {
