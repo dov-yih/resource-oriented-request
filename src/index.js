@@ -154,7 +154,6 @@ export default class API {
    * @param {Object} body
    * @param {number} body.id
    * @param {string} body.relationship
-   * @param {Object} params
    * @param {Object} headers
    * @returns
    * @memberof API
@@ -168,22 +167,26 @@ export default class API {
    *  {'X-tag': 'costom-tag'}
    * )
    */
-  static async get(body = {}, headers = {}) {
+  static async get(action = '', body = {}, headers = {}) {
     try {
+      let url = this.pathname()
+
+      if(action && typeof action === 'string') {
+        url = join(url, action)
+      }else {
+        [body, headers] = [action, body]
+      }
+      console.log('get params',url, action, body, headers)
       let {
         id,
         relationship,
         ...params
       } = body
 
-      let url = this.pathname()
-
       if (id) url += `/${id}`
       if (relationship) url += `/${this.resCase(relationship)}`
 
-      const {
-        data
-      } = await this.axios.get(url, {
+      const {data} = await this.axios.get(url, {
         params,
         paramsSerializer: p => query(p),
         headers: Object.assign({}, this.headers, headers)
