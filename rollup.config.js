@@ -4,7 +4,6 @@ import {
   terser
 } from "rollup-plugin-terser";
 import filesize from 'rollup-plugin-filesize'
-import builtins from 'rollup-plugin-node-builtins'
 
 function commonConfig(outputDir, format) {
   return {
@@ -14,7 +13,6 @@ function commonConfig(outputDir, format) {
       format: format
     },
     plugins: [
-      builtins(),
       babel({
         babelrc: false,
         presets: [
