@@ -20,8 +20,6 @@
   "license": "BSD-2-Clause",
   "dependencies": {
     "axios": "^0.18.0",
-    "kitsu-core": "^6.4.0",
-    "pluralize": "^7.0.0",
     "url-join": "^4.0.0"
   },
   "devDependencies": {

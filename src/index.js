@@ -1,15 +1,6 @@
 import client from './client'
-import pluralise from 'pluralize'
 import join from 'url-join'
-import {
-  camel,
-  deserialise,
-  error,
-  // kebab,
-  query,
-  serialise,
-  snake
-} from 'kitsu-core'
+
 
 /**
  * @export API
@@ -28,20 +19,6 @@ export default class API {
    * @access private
    */
   static axios = client
-  /**
-   * 单复数转换函数, 基于 pluralise
-   *
-   * @static
-   * @memberof API
-   * @access private
-   */
-  static plural = pluralise
-  static set pluralise(func) {
-    if (typeof func !== 'function') {
-      throw TypeError('API.plural MUST BE a function!')
-    }
-    this.plural = func
-  }
 
   /**
    *
@@ -89,7 +66,7 @@ export default class API {
    * PostMan.getById(1)
    * // => /postMan/1
    */
-  static camel = camel
+  // static camel = camel
   /**
    * 资源名的命名风格
    *
@@ -104,7 +81,7 @@ export default class API {
    * PostMan.getById(1)
    * // => /postMan/1
    */
-  static resCase = camel
+  // static resCase = camel
 
   /**
    * 设置当前资源的前缀
@@ -173,10 +150,9 @@ export default class API {
 
       if(action && typeof action === 'string') {
         url = join(url, action)
-      }else {
+      } else {
         [body, headers] = [action, body]
       }
-      console.log('get params',url, action, body, headers)
       let {
         id,
         relationship,
@@ -184,16 +160,16 @@ export default class API {
       } = body
 
       if (id) url += `/${id}`
-      if (relationship) url += `/${this.resCase(relationship)}`
+      if (relationship) url += `/relationship`
 
       const {data} = await this.axios.get(url, {
         params,
         paramsSerializer: p => query(p),
         headers: Object.assign({}, this.headers, headers)
       })
-      return deserialise(data)
+      return data
     } catch (E) {
-      throw error(E)
+      throw E
     }
   }
 
@@ -208,21 +184,18 @@ export default class API {
    */
   static async patch(body, headers = {}) {
     try {
-      const model = this.model
-      const serialData = await serialise.apply(this, [model, body, 'PUT'])
       const url = this.pathname(body.id)
       const {
         data
       } = await this.axios.put(
         url,
-        serialData, {
-          headers: Object.assign(this.headers, headers)
-        }
+        body, 
+        { headers: Object.assign(this.headers, headers) },
       )
 
       return data
     } catch (E) {
-      throw error(E)
+      throw E
     }
   }
   /**
@@ -241,23 +214,13 @@ export default class API {
       const {
         data
       } = await this.axios.delete(
-        url, {
-          data: await serialise.apply(
-            this,
-            [
-              model,
-              {
-                id
-              },
-              'DELETE'
-            ]),
-          headers: Object.assign(this.headers, headers)
-        }
+        url, 
+        { headers: Object.assign(this.headers, headers) }
       )
 
       return data
     } catch (E) {
-      throw error(E)
+      throw E
     }
   }
 
@@ -278,13 +241,12 @@ export default class API {
         data
       } = await this.axios.post(
         url,
-        await serialise.apply(this, [model, body]), {
-          headers: Object.assign({}, this.headers, headers)
-        }
+        body, 
+        {  headers: Object.assign({}, this.headers, headers) }
       )
       return data
     } catch (E) {
-      throw error(E)
+      throw E
     }
   }
 
@@ -299,20 +261,15 @@ export default class API {
    */
   static async self(params = {}, headers = {}) {
     try {
-      const res = await this.get(
-        'users', // users ??
-        Object.assign({
-            filter: {
-              self: true
-            }
-          },
-          params
-        ),
-        headers
+      const url = this.pathname()
+      const {data} = await this.get(
+        url, // users ??
+        params,
+        headers,
       )
-      return res.data[0]
+      return data
     } catch (E) {
-      throw error(E)
+      throw E
     }
   }
 
@@ -369,17 +326,6 @@ export default class API {
    * @memberof API
    */
   static create = API.post
-
-  /**
-   * 统一的错误处理,默认控制台打印
-   *
-   * @static
-   * @param {*} e
-   * @memberof API
-   */
-  static onError(e) {
-    console.log(this.model + ' on error:', e)
-  }
 
 }
 
