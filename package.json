@@ -20,6 +20,7 @@
   "license": "BSD-2-Clause",
   "dependencies": {
     "axios": "^0.18.0",
+    "qs": "^6.6.0",
     "url-join": "^4.0.0"
   },
   "devDependencies": {
